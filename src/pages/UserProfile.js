@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import '../style/App.css';
-import { loadPosts, loadLikes, loadUserFollowing, followUser, unFollowUser } from '../backendCalls'
+import { loadPosts, loadLikes, loadUserFollowing, followUser, unFollowUser, newUser, submitPost } from '../backendCalls'
 import { getLoggedInUser, getUser } from '../spotifyCalls';
 import Post from '../components/Post';
-import Header from '../components/Header';
 import profilePicturePlaceholder from '../img/profilePicturePlaceholder.jpg';
 import ProfilePageHeader from '../components/ProfilePageHeader';
+import NewPost from '../components/NewPost';
 
 class UserProfile extends Component {
     constructor() {
@@ -20,13 +20,17 @@ class UserProfile extends Component {
             followers: [],
             following: [],
             loggedInUserFollowingProfileUser: false,
-            profilePicY: ''
+            profilePicY: '',
+            newPost: false
         };
         this.clickFollowButton = this.clickFollowButton.bind(this);
         this.followUser = this.followUser.bind(this);
         this.unfollowUser = this.unfollowUser.bind(this);
         this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.handleMuteButton = this.handleMuteButton.bind(this);
+        this.clickNewPost = this.clickNewPost.bind(this);
+        this.clickOuterNewPost = this.clickOuterNewPost.bind(this);
+        this.submitNewPost = this.submitNewPost.bind(this);
     }
     handlePlayerStatus = async (device_id) => {
         this.setState({
@@ -80,6 +84,14 @@ class UserProfile extends Component {
             });
 
             getLoggedInUser(accessToken).then(user => {
+                let postProfilePic = user.images && user.images.length > 0 ?
+                user.images[0].url : '';
+
+                loadUserFollowing(user.display_name).then(userFollowing => {
+                    if (!Object.keys(userFollowing).length) {
+                        newUser(user.id, user.display_name);
+                    }
+                });
                 loadUserFollowing(profilePageIDFromUrl).then(profilePageUser => {
                     let loggedInUserFollowingProfileUser = profilePageUser.followers &&
                         profilePageUser.followers.filter(f =>
@@ -133,7 +145,8 @@ class UserProfile extends Component {
                                 user: {
                                     name: user.display_name,
                                     product: user.product,
-                                    id: user.id
+                                    id: user.id,
+                                    profilePic: postProfilePic
                                 }
                             },
                             profilePageUsername: profilePageUsernameFromUrl,
@@ -227,6 +240,46 @@ class UserProfile extends Component {
     handleMuteButton() {
         this.setState({ muted: !this.state.muted });
     }
+    clickNewPost() {
+        const showPost = this.state.newPost;
+        this.setState({
+            newPost: !showPost
+        });
+    }
+    clickOuterNewPost() {
+        const showPost = this.state.newPost;
+        this.setState({
+            newPost: !showPost
+        });
+    }
+
+  async submitNewPost(text, songId, songName, songArtist, songArt, startTime, stopTime) {
+    const profilePic = this.state.serverData.user.profilePic;
+    const username = this.state.serverData.user.name;
+    const userId = this.state.serverData.user.id;
+    const newPost = await submitPost(
+      profilePic,
+      username,
+      userId,
+      text,
+      songId,
+      songName,
+      songArtist,
+      songArt,
+      startTime,
+      stopTime
+    );
+    const updatedPosts = this.state.serverData.posts;
+    updatedPosts.unshift(newPost);
+    this.setState({
+      serverData: {
+        posts: updatedPosts,
+        user: this.state.serverData.user
+      },
+      newPost: false
+    });
+  }
+
     render() {
         let allPosts = this.state.serverData.posts ? this.state.serverData.posts : [];
         let followers = this.state.followers ? this.state.followers : [];
@@ -245,7 +298,22 @@ class UserProfile extends Component {
                     profilePageId={this.state.profilePageId}
                     loggedInUserFollowingProfileUser={this.state.loggedInUserFollowingProfileUser}
                     clickFollowButton={this.clickFollowButton}
+                    clickNewPost={this.clickNewPost}
                 />
+                {this.state.newPost &&
+                    <div>
+                        <div className="outerNewPost" onMouseDown={this.clickOuterNewPost}></div>
+                        <NewPost
+                            deviceId={this.state.deviceId}
+                            accessToken={this.state.accessToken}
+                            onMouseDown={() => { }}
+                            userName={name}
+                            submitNewPost={this.submitNewPost}
+                            handleLogInButton={this.handleLogInButton}
+                            product={this.state.serverData.user.product}
+                        />
+                    </div>
+                }
                 <div className='profilePageImgContainer'>
                     <img className='profilePageImg' src={this.state.imgUrl ? this.state.imgUrl : profilePicturePlaceholder} />
                 </div>
@@ -253,7 +321,7 @@ class UserProfile extends Component {
                 <div className='profilePageContent'>
                     <div className='profilePageUser'>
                         <div className='followContainer'>
-                            <h2 style={{marginTop:0}}>Followers: {followers.length}</h2>
+                            <h2 style={{ marginTop: 0 }}>Followers: {followers.length}</h2>
                             <div className='scrollFollowers'>
                                 {followers.map(follower =>
                                     <FollowerLink follow={follower} />
@@ -261,7 +329,7 @@ class UserProfile extends Component {
                             </div>
                         </div>
                         <div className='followContainer'>
-                            <h2 style={{marginTop:0}}>Following: {following.length}</h2>
+                            <h2 style={{ marginTop: 0 }}>Following: {following.length}</h2>
                             <div className='scrollFollowing'>
                                 {following.map(following =>
                                     <FollowerLink follow={following} />

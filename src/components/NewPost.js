@@ -116,6 +116,7 @@ export default class NewPost extends Component {
             this.state.selectedSong.id,
             this.state.selectedSong.name,
             this.state.selectedSong.artist,
+            this.state.selectedSong.art,
             this.state.startTime,
             this.state.endTime
         );
@@ -160,7 +161,7 @@ export default class NewPost extends Component {
                     </div>
                     <h3 className='logInMessage'>Log in to create and share posts</h3>
                     <div className="newPostNotLoggedIn">
-                        <button className='myButtonBlue' onClick={this.props.handleLogInButton}>Log In</button>
+                        <button className='myButtonOrange' onClick={this.props.handleLogInButton}>Log In</button>
                     </div>
                 </div>
             );
@@ -184,7 +185,7 @@ export default class NewPost extends Component {
                             }}></textarea>
                     }
                     <div className="newPostBottom">
-                        <button className='myButtonBlue' onClick={() => {
+                        <button className='myButtonOrange' onClick={() => {
                             this.switchForm();
                         }}>Add Song</button>
                     </div>
@@ -251,25 +252,25 @@ export default class NewPost extends Component {
                                     />
                                 }
                                 <div className='songTimeControls'>
-                                    <button className='myButtonBlue' onClick={this.handlePlayClick}>
+                                    <button className='myButtonOrange' onClick={this.handlePlayClick}>
                                         {this.props.product === 'premium' ? 'Play clip' : 'Play preview'}
                                     </button>
                                     <h5 className="songTime">{this.formatTime()}</h5>
-                                    <button className='myButtonBlue' onClick={this.handlePauseClick}>Pause</button>
+                                    <button className='myButtonOrange' onClick={this.handlePauseClick}>Pause</button>
                                 </div>
                             </div>
                     }
                     <div className="newPostBottom">
-                        <button className='myButtonBlue' onClick={() => {
+                        <button className='myButtonOrange' onClick={() => {
                             this.switchForm();
                         }}>Go back</button>
                         {(this.state.text && this.state.selectedSong.name) ?
-                            <button className='myButtonBlue' onClick={() => {
+                            <button className='myButtonOrange' onClick={() => {
                                 this.submitPost();
                             }}>Post</button> :
                             <button title={this.state.text ? 'Select a song before posting' :
                                 'Go back and add text before posting'}
-                                className='myButtonBlueDeactive'>Post</button>
+                                className='myButtonOrange myButtonOrangeDeactive'>Post</button>
                         }
                     </div>
                 </div>

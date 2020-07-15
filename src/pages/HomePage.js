@@ -66,10 +66,15 @@ class HomePage extends Component {
     let parsed = queryString.parse(window.location.search);
     if (parsed.access_token) {
       let accessToken = parsed.access_token;
+
       getLoggedInUser(accessToken).then(user => {
+        let imgUrl = user.images && user.images.length > 0 ?
+          user.images[0].url : '';
+
         loadUserFollowing(user.display_name).then(userFollowing => {
-          if (!Object.keys(userFollowing).length)
-            newUser(user.display_name);
+          if (!Object.keys(userFollowing).length) {
+            newUser(user.id, user.display_name);
+          }
         });
         loadPosts().then(posts => {
           let postsWithLikeCount = [];
@@ -94,7 +99,8 @@ class HomePage extends Component {
                 user: {
                   name: user.display_name,
                   product: user.product,
-                  id: user.id
+                  id: user.id,
+                  imgUrl: imgUrl
                 }
               }
             });
@@ -128,16 +134,19 @@ class HomePage extends Component {
     }
   }
 
-  async submitNewPost(text, songId, songName, songArtist, startTime, stopTime) {
+  async submitNewPost(text, songId, songName, songArtist, songArt, startTime, stopTime) {
+    const profilePic = this.state.serverData.user.imgUrl;
     const username = this.state.serverData.user.name;
     const userId = this.state.serverData.user.id;
     const newPost = await submitPost(
+      profilePic,
       username,
       userId,
       text,
       songId,
       songName,
       songArtist,
+      songArt,
       startTime,
       stopTime
     );
@@ -150,7 +159,6 @@ class HomePage extends Component {
       },
       newPost: false
     });
-
   }
 
   clickOuterNewPost() {
@@ -165,7 +173,7 @@ class HomePage extends Component {
   clickNewPost() {
     const showPost = this.state.newPost;
     this.setState({
-        newPost: !showPost
+      newPost: !showPost
     });
   }
   render() {
@@ -175,11 +183,11 @@ class HomePage extends Component {
 
     return (
       <div className="App">
-        <Header 
+        <Header
           username={name}
           userId={userId}
-          newPost={this.state.newPost} 
-          clickNewPost={this.clickNewPost} 
+          newPost={this.state.newPost}
+          clickNewPost={this.clickNewPost}
           handleMuteButton={this.handleMuteButton}
           muted={this.state.muted}
         />
@@ -199,7 +207,8 @@ class HomePage extends Component {
         }
         {
           (!this.state.accessToken) &&
-          <h3 style={{ 'margin': '9em 0px -7em 10%', 'padding': '.5em' }}>Log in to share posts and listen to peoples vibes!</h3>
+          <h3 style={{ 'margin': '9em 0px -7em 10%', 'padding': '.5em' }}>
+            Log in with Spotify your account to share posts and listen to peoples vibes!</h3>
         }
 
         {

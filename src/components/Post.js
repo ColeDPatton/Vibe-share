@@ -16,36 +16,14 @@ class PostInfo extends Component {
         this.redirectToUserProfile = this.redirectToUserProfile.bind(this);
     }
     componentDidMount() {
-        let parsed = queryString.parse(window.location.search);
-        let accessToken = ''
-        if (parsed.access_token) {
-            accessToken = parsed.access_token;
-            getUser(accessToken, this.props.id).then(user => {
-                let imgUrl = (user.images && user.images.length > 0) ?
-                    user.images[0].url : '';
-                this.setState({
-                    imgUrl: imgUrl,
-                    name: this.props.name,
-                    text: this.props.text
-                });
-            });
-        }
+        this.reloadUserImg();
     }
     reloadUserImg = async () => {
-        let parsed = queryString.parse(window.location.search);
-        let accessToken = ''
-        if (parsed.access_token) {
-            accessToken = parsed.access_token;
-            getUser(accessToken, this.props.id).then(user => {
-                let imgUrl = (user.images && user.images.length > 0) ?
-                    user.images[0].url : '';
-                this.setState({
-                    imgUrl: imgUrl,
-                    name: this.props.name,
-                    text: this.props.text
-                });
-            });
-        }
+        this.setState({
+            imgUrl: this.props.profilePic,
+            name: this.props.name,
+            text: this.props.text
+        });
     }
     redirectToUserProfile() {
         let parsed = queryString.parse(window.location.search);
@@ -53,10 +31,10 @@ class PostInfo extends Component {
         if (parsed.access_token)
             accessToken = parsed.access_token;
 
-        window.location.href = window.location.origin + 
-        '/user/?username=' + this.props.name +
-        '&userId=' + this.props.id +
-         (accessToken ? ('&access_token=' + accessToken) : '');
+        window.location.href = window.location.origin +
+            '/user/?username=' + this.props.name +
+            '&userId=' + this.props.id +
+            (accessToken ? ('&access_token=' + accessToken) : '');
     }
     render() {
         let name = this.props.name;
@@ -92,8 +70,15 @@ class PostMusic extends Component {
         history.push('https://open.spotify.com/track/' + this.props.songId);
     }
     loadTrack = async () => {
-        const trackData = await getTrack(this.props.accessToken, this.props.songId);
-        const albumCover = trackData.album.images[0].url;
+        const albumCover = this.props.songArt;
+        this.setState({
+            picLoaded: true,
+            albumUrl: albumCover,
+            songName: this.props.songName
+        });
+    }
+    loadImg = async () => {
+        const albumCover = this.props.songArt;
         this.setState({
             picLoaded: true,
             albumUrl: albumCover,
@@ -105,6 +90,8 @@ class PostMusic extends Component {
         let songArtist = this.props.songArtist;
         if ((this.props.loggedIn && (this.state.songName != this.props.songName)) || (this.props.loggedIn && !this.state.picLoaded)) {
             this.loadTrack();
+        } else if ((this.state.songName !== this.props.songName) || !this.state.picLoaded) {
+            this.loadImg();
         }
         return (
             <div className="postMusic">
@@ -237,7 +224,7 @@ export default class Post extends Component {
         if (!this.props.muted && this.state.product) {
             if (this.state.product === 'premium') {
                 this.playSong(this.props.post.songId, this.props.post.startTime, this.props.post.stopTime);
-            } else if (this.state.songPreviewUrl){
+            } else if (this.state.songPreviewUrl) {
                 if (this.state.song)
                     this.state.song.pause();
                 let song = new Audio(this.state.songPreviewUrl);
@@ -273,14 +260,15 @@ export default class Post extends Component {
         if (this.state.accessToken) {
             return (
                 <div className="post" onTouchStart={this.handleMouseHover} onTouchEnd={this.handleMouseLeave}
-                 onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseLeave}>
+                    onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseLeave}>
                     <div className="postInner">
-                        <PostInfo access_tokenn={this.state.accessToken} name={post.username} text={post.text} id={post.userId}/>
-                        <PostMusic songName={post.songName} songArtist={post.songArtist} songId={post.songId} loggedIn={true} accessToken={this.props.accessToken} />
+                        <PostInfo profilePic={post.profilePic} access_tokenn={this.state.accessToken} name={post.username} text={post.text} id={post.userId} />
+                        <PostMusic songArt={post.songArt} songName={post.songName} songArtist={post.songArtist} songId={post.songId} loggedIn={true} accessToken={this.props.accessToken} />
                     </div>
                     <div className='likeButtonContainer'>
-                        <button className='likeButton myButtonOrange' onClick={this.clickedLikePost}>
-                            {this.state.liked ? 'Liked' : 'Like'}
+                        <button className={(this.state.liked ? 'likedButton' : 'myButtonOrange')}
+                            onClick={this.clickedLikePost}>
+                            {this.state.liked ? 'Unlike' : 'Like'}
                         </button>
                         <p>{this.state.likeCount}</p>
                     </div>
@@ -290,8 +278,8 @@ export default class Post extends Component {
             return (
                 <div className="post">
                     <div className='postInner'>
-                        <PostInfo name={post.username} text={post.text} id={post.userId} />
-                        <PostMusic songName={post.songName} songArtist={post.songArtist} songId={post.songId} loggedIn={false} />
+                        <PostInfo profilePic={post.profilePic} name={post.username} text={post.text} id={post.userId} />
+                        <PostMusic songArt={post.songArt} songName={post.songName} songArtist={post.songArtist} songId={post.songId} loggedIn={false} />
                     </div>
                     <div className='likeButtonContainer'>
                         <button className='likeButton myButtonOrange'>Like</button>

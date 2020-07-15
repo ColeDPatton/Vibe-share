@@ -12,7 +12,7 @@
   margin-right: 3em;
 }
 .header {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -93,10 +93,6 @@
   box-shadow: 0px 2px 2px 2px #ead6cf;
   
 }
-.post .myButtonOrange {
-  margin-left: .5em;
-  padding: .4em 1.2em;
-}
 .profilePic {
   height: 5em;
   width: 5em;
@@ -107,7 +103,8 @@
 }
 
 .albumImg {
-  width: 50%;
+  width: 70%;
+  max-width: 10em;
   cursor: pointer;
   object-fit: contain;
   border-radius: 6px;
@@ -124,12 +121,8 @@
 .postMusic {
   padding: .3em;
   width: 33%;
-  display: flex;
   align-items: flex-start;
-}
-
-.songCredit {
-  overflow-x: scroll;
+  text-align: center;
 }
 
 .songName, .artists{
@@ -215,11 +208,11 @@
   text-align: left;
   margin-left: 1em;
 }
-.newPostNotLoggedIn .myButtonOrange {
+/* .newPostNotLoggedIn .myButtonOrange {
   margin: 0;
   padding: 1em;;
-}
-.myButtonWhite, .myButtonOrange, .myButtonBlue, .myButtonBlueDeactive {
+} */
+.myButtonWhite, .myButtonBlue, .myButtonBlueDeactive {
   color: black;
   font-size: 1em;
   font-weight: bold;
@@ -232,33 +225,52 @@
 .myButtonWhite {
   background-color: #f9f9f9;
 }
-.myButtonOrange {
-  background-color: #ff7043;
-}
-.myButtonBlue {
-  background-color: #888bff;
-}
-.myButtonBlueDeactive {
-  background-color: #bdbaba;
-  color: #ffffff;
-}
-.myButtonBlue:hover {
-  background-color: #6366d4;
-}
 .myButtonOrange:hover, .myButtonWhite:hover {
-  background-color: #888bff;
+  background-color: #4c4c4c;
+  color: white;
+  transition: color .3s ease, background-color .3s ease;
 }
-.myButtonOrange:focus, .myButtonWhite:focus, .myButtonBlue:focus,
-.myButtonBlueDeactive:focus {
-  outline: none;
+.likedButton {
+  background-color: #dedede;
+  color: #000;
+  font-size: 1em;
+  width: 6rem;
+  font-weight: 700;
+  border-radius: 6px;
+  font-family: Helvetica Neue, Arial, sans-serif;
+  border-style: none;
+  cursor: pointer;
+  padding: 0.7em 1.4em;
+  transition: all 0.2s ease-in-out;
 }
-.myButtonOrange:active, .myButtonWhite:active {
-  background-color: #6366d4;
+.likedButton:hover {
+  color: #efefef;
+  background: #ff7043;
 }
-.myButtonBlue:active {
-  background-color: #454897;
+.myButtonOrange {
+  color: #000;
+  background: #ff7043;
+  font-size: 1em;
+  width: 6rem;
+  font-weight: 700;
+  border-radius: 6px;
+  font-family: Helvetica Neue, Arial, sans-serif;
+  border-style: none;
+  cursor: pointer;
+  padding: 0.7em 1.4em;
+  transition: all 0.2s ease-in-out;
 }
-.myButtonBlueDeactive {
+.myButtonOrange:hover {
+  background-color: rgb(201, 63, 13);
+  color: #fff;
+}
+* {
+  outline:none
+}
+
+.myButtonOrangeDeactive {
+  background-color: #bdbaba !important;
+  color: #ffffff !important;
   cursor: not-allowed;
 }
 .likeButtonContainer {
@@ -489,12 +501,6 @@
   .desktopNav {
     margin-right: 3em;
   }
-  .username, .songName {
-    font-size: 1.6em;
-  }
-  .postText, .artists {
-    font-size: 1.3em;
-  }
   .profilePageHeader {
     height: 25em;
   }
@@ -576,15 +582,12 @@
     width: 100%;
   }
   .albumImg {
-    width: 40%;
+    width: 35%;
   }
   .postMusic {
     margin-left: 0;
     margin-top: 1em;
     width: 60%;
-  }
-  .likeButtonContainer {
-    justify-content: flex-end;
   }
   .postMusic {
     width: 100%;
@@ -646,4 +649,12 @@
     margin: 0px 0.5em;
     min-width: 10em;
   }
+}
+
+@media only screen and (max-width: 400px) {
+
+  .albumImg {
+    width: 50%;
+  }
+
 }

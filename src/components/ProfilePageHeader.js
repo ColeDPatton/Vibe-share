@@ -97,9 +97,9 @@ class ProfilePageHeader extends Component {
                         onClick={this.toggleMobileMenu}>Menu</button>}
 
                 {this.props.username !== '' && this.props.username !== 'Not logged in' &&
-                    <div className='desktopNav buttonContainer New-Post-Button' style={{ marginTop: '2em' }}>
-                        {this.props.clickNewPost && <button className={this.props.newPost ? 'myButtonWhite' : 'myButtonBlue'}
-                            onClick={this.props.clickNewPost}>{this.props.newPost ? "Cancel" : "New Post"}</button>}
+                    <div className='desktopNav buttonContainer' style={{ marginTop: '2em' }}>
+                            {this.props.clickNewPost && <button className='myButtonWhite'
+                                onClick={this.props.clickNewPost}>{this.props.newPost ? "Cancel" : "New Post"}</button>}
                         <button className='myButtonWhite' onClick={this.redirectToProfilePage}>Your Profile</button>
                         <button className='myButtonWhite' onClick={this.props.handleMuteButton}>
                             {this.props.muted ? 'Click to Unmute' : 'Click to Mute'}</button>
@@ -110,8 +110,8 @@ class ProfilePageHeader extends Component {
                 {this.props.username !== '' && this.props.username !== 'Not logged in' &&
                     <div className={'mobileNav ' + (this.state.showMobileMenu ? 'showMobileNav' : 'hideMobileNav')}>
                         <h4 className='closeMenu' onClick={this.toggleMobileMenu}>Close Menu</h4>
-                        {this.props.clickNewPost && <h4 className='newPostButton New-Post-Button'
-                            onClick={this.props.clickNewPost}>{this.props.newPost ? "Cancel" : "New Post"}</h4>}
+                        {this.props.clickNewPost && <h4 onClick={this.props.clickNewPost}>
+                                {this.props.newPost ? "Cancel" : "New Post"}</h4>}
                         <h4 onClick={this.redirectToProfilePage}>Your Profile</h4>
                         <h4 onClick={this.props.handleMuteButton}>
                             {this.props.muted ? 'Click to Unmute' : 'Click to Mute'}</h4>
@@ -120,7 +120,7 @@ class ProfilePageHeader extends Component {
                 }
                 {this.props.userId && (
                     (this.props.userId !== this.props.profilePageId) ?
-                        <button className='myButtonBlue followButton' onClick={this.props.clickFollowButton}>
+                        <button className='myButtonOrange followButton' onClick={this.props.clickFollowButton}>
                             {this.props.loggedInUserFollowingProfileUser ? 'Unfollow' : 'Follow'}</button> :
                         <div className='coverImageSlider'>
                             {!this.state.adjustingCoverImage ?

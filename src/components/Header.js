@@ -77,13 +77,12 @@ class Header extends Component {
                         <button className='mobile myButtonWhite' onClick={this.toggleMobileMenu}>Menu</button>}
 
                     {this.props.username !== '' && this.props.username !== 'Not logged in' &&
-                        <div className='desktopNav buttonContainer New-Post-Button'>
-                            {this.props.clickNewPost && <button className={'New-Post-Button ' + 
-                                (this.props.newPost ? 'myButtonWhite' : 'myButtonBlue')}
+                        <div className='desktopNav buttonContainer '>
+                            {this.props.clickNewPost && <button className='myButtonWhite'
                                 onClick={this.props.clickNewPost}>{this.props.newPost ? "Cancel" : "New Post"}</button>}
                             <button className='myButtonWhite' onClick={this.redirectToProfilePage}>Your Profile</button>
                             <button className='myButtonWhite' onClick={this.props.handleMuteButton}>
-                                {this.props.muted ? 'Click to Unmute' : 'Click to Mute'}</button>
+                                {this.props.muted ? 'Unmute' : 'Mute'}</button>
                             <button className='myButtonWhite' onClick={this.handleLogInButton}>Log Out</button>
                         </div>
                     }
@@ -91,11 +90,11 @@ class Header extends Component {
                     {this.props.username !== '' && this.props.username !== 'Not logged in' &&
                         <div className={'mobileNav ' + (this.state.showMobileMenu ? 'showMobileNav' : 'hideMobileNav')}>
                             <h4 className='closeMenu' onClick={this.toggleMobileMenu}>Close Menu</h4>
-                            {this.props.clickNewPost && <h4 className='newPostButton New-Post-Button'
-                                onClick={this.props.clickNewPost}>{this.props.newPost ? "Cancel" : "New Post"}</h4>}
+                            {this.props.clickNewPost && <h4 onClick={this.props.clickNewPost}>
+                                {this.props.newPost ? "Cancel" : "New Post"}</h4>}
                             <h4 onClick={this.redirectToProfilePage}>Your Profile</h4>
                             <h4 onClick={this.props.handleMuteButton}>
-                                {this.props.muted ? 'Click to Unmute' : 'Click to Mute'}</h4>
+                                {this.props.muted ? 'Unmute' : 'Click to Mute'}</h4>
                             <h4 onClick={this.handleLogInButton}>Log Out</h4>
                         </div>
                     }

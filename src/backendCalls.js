@@ -11,14 +11,16 @@ export async function loadPosts() {
     }).then(d => d.json());
 }
 
-export async function submitPost(username, userId, text, songId, songName, songArtist, startTime, stopTime) {
+export async function submitPost(profilePic, username, userId, text, songId, songName, songArtist, songArt, startTime, stopTime) {
     var data = new URLSearchParams();
+    data.append('profilePic', profilePic);
     data.append('username', username);
     data.append('userId', userId);
     data.append('text', text);
     data.append('songId', songId);
     data.append('songName', songName);
     data.append('songArtist', songArtist);
+    data.append('songArt', songArt);
     data.append('startTime', startTime);
     data.append('stopTime', stopTime);
     return fetch(url + '/api/newPost', {
@@ -78,8 +80,9 @@ export async function loadUserFollowing(username) {
     }).then(d => d.json());
 }
 
-export async function newUser(username) {
+export async function newUser(userId, username) {
     var data = new URLSearchParams();
+    data.append('userId', userId);
     data.append('username', username);
     data.append('followers', []);
     data.append('following', []);
