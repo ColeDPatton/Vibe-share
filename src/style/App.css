@@ -1,0 +1,649 @@
+#root {
+  background-color: #f5e7e3;
+}
+.mobile {
+  display: none;
+}
+.mobileNav {
+  display: none;
+}
+.logIn {
+  margin-left: auto;
+  margin-right: 3em;
+}
+.header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: #ff7043;
+  align-items: center;
+}
+.header h1 {
+  margin: .5em 0 0 1em;
+  cursor: pointer;
+}
+.profilePageHeader {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-color: rgba(58, 14, 0, 0.77);
+  background-blend-mode: overlay;
+  background-size: 100% 350%;
+  height: 20em;
+  align-items: flex-start;
+}
+.profilePageHeader h1 {
+  margin: .5em 0 0 1em;
+  cursor: pointer;
+}
+.desktopNav {
+  margin-left: auto;
+  margin-right: 2em;
+  display: flex;
+}
+.desktopNav .myButtonWhite, .desktopNav .myButtonBlue{
+  margin-left: 2em;
+}
+.searchContainer {
+  padding: 0 2em 1em;
+}
+.searchContainer .filter input {
+  background-color: #ff7043;
+  border-color: black;
+  border-style: solid;
+  border-radius: 10px;
+  padding: .4em .8em;
+}
+.searchContainer .filter input:focus {
+  outline: none;
+  background-color: #ff916f;
+}
+.userSearchResults {
+  margin-top: .5em;
+  max-height: 10em;
+  overflow-y: scroll;
+  background-color: #ff916f;
+  padding-left: .5em;
+}
+.App {
+  padding: 1em;
+}
+.usernameTitle {
+  margin: 0 0 16px 32px;
+}
+.blurPosts {
+  /* background-color: rgba(244, 244, 244, .8); */
+  opacity: 65%;
+}
+.posts {
+  margin-top: 10em;
+}
+.post {
+  width: 80%;
+  height: 80%;
+  padding: .5em;
+  margin: 3em auto;
+  border-radius: 6px;
+  background: #fffaf9;
+  box-shadow: 0px 2px 2px 2px #ead6cf;
+  
+}
+.post .myButtonOrange {
+  margin-left: .5em;
+  padding: .4em 1.2em;
+}
+.profilePic {
+  height: 5em;
+  width: 5em;
+  padding: .5em;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.albumImg {
+  width: 50%;
+  cursor: pointer;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.postInner {
+  display: flex;
+}
+.postInfo {
+  display: flex;
+  height: fit-content;
+  width: 75%;
+}
+
+.postMusic {
+  padding: .3em;
+  width: 33%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.songCredit {
+  overflow-x: scroll;
+}
+
+.songName, .artists{
+  margin: .3em .5em;
+  text-overflow: ellipsis;
+}
+.outerNewPost {
+  width: 100vw;
+  height: 100vh;
+  margin-left: -2%;
+  margin-top: -2%;
+  z-index: 1;
+  position: absolute;
+}
+.newPost {
+  width: 500px;
+  height: 500px;
+  border-radius: .6em;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 10%;
+  text-align: center;
+}
+.newPostTop {
+  background: #ff7043;
+  display: flex;
+  border-top-left-radius: .5em;
+  border-top-right-radius: .5em;
+}
+.username, .postText {
+  margin: .5em;
+}
+.username {
+  cursor: pointer;
+}
+.newPost .filter input {
+  border-color: black;
+  border-style: solid;
+  border-radius: 10px;
+  padding: .4em .8em;
+}
+.newPost .filter input:focus{
+  outline: none;
+  background-color: #fff5f2;
+}
+.newPostText {
+  display: flex;
+  padding: 2%;
+  margin: auto;
+  width: 96%;
+  height: 300px;
+  resize: none;
+  border: none;
+  font-weight: 400;
+  font-size: 1.5em;
+  font-family: Helvetica Neue, Arial, sans-serif;
+}
+.newPostText:focus {
+  outline-color: #888bff;
+}
+.newPostBottom {
+  position: absolute;
+  bottom: 1em;
+  width: 100%;
+}
+.newPostBottom button{
+  padding: 1em 3em;
+  margin: 0px 1.5em;
+  min-width: 11em;
+}
+.newPostNotLoggedIn {
+  margin: 13em 0;
+  width: 100%;
+}
+.logInMessage {
+  text-align: left;
+  margin-left: 1em;
+}
+.newPostNotLoggedIn .myButtonOrange {
+  margin: 0;
+  padding: 1em;;
+}
+.myButtonWhite, .myButtonOrange, .myButtonBlue, .myButtonBlueDeactive {
+  color: black;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 6px;
+  font-family: Helvetica Neue, Arial, sans-serif;
+  border-style: none;
+  cursor: pointer;
+  padding: .7em 1.4em;
+}
+.myButtonWhite {
+  background-color: #f9f9f9;
+}
+.myButtonOrange {
+  background-color: #ff7043;
+}
+.myButtonBlue {
+  background-color: #888bff;
+}
+.myButtonBlueDeactive {
+  background-color: #bdbaba;
+  color: #ffffff;
+}
+.myButtonBlue:hover {
+  background-color: #6366d4;
+}
+.myButtonOrange:hover, .myButtonWhite:hover {
+  background-color: #888bff;
+}
+.myButtonOrange:focus, .myButtonWhite:focus, .myButtonBlue:focus,
+.myButtonBlueDeactive:focus {
+  outline: none;
+}
+.myButtonOrange:active, .myButtonWhite:active {
+  background-color: #6366d4;
+}
+.myButtonBlue:active {
+  background-color: #454897;
+}
+.myButtonBlueDeactive {
+  cursor: not-allowed;
+}
+.likeButtonContainer {
+  display: flex;
+  align-items: center;
+}
+.likeButtonContainer p {
+  margin: .2em;
+  margin-left: .5em;
+}
+.searchBar {
+  display: flex;
+  margin: 1em 0;
+  align-items: center;
+}
+.searchBar h4 {
+  margin: 0 1em;
+}
+.searchedSongContainer {
+  overflow-y: scroll;
+  height: 285px;
+}
+.searchResult {
+  padding: 6px;
+  padding-left: 1em;
+  display: flex;
+  cursor: pointer;
+  text-align: left;
+}
+.searchResult:hover {
+  background-color: #f0f0f0;
+}
+.searchResultSong {
+  margin: 0;
+}
+.searchResultArtist {
+  margin: 0;
+}
+.searchResultImg {
+  width: 10%;
+  height: 10%;
+  margin-right: 1em;
+}
+.songTime {
+  min-width: 4em;
+}
+.songTimeControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: .75em;
+}
+.songTimeControls button {
+  background: #373d6b;
+  color: #efefef;
+}
+.selectedSong {
+  margin-top: 2em;
+}
+.selectedSong button {
+  min-width: 7em;
+  height: 2em;
+  padding: 0;
+  margin: 0 1em;
+}
+.selectedSong .searchResultImg {
+  width: 15%;
+  height: 15%;
+  margin: 0 0 12px;
+}
+.MuiSlider-valueLabel {
+  left: -4px !important;
+}
+.muteButton {
+  margin-left: auto;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+}
+.muted {
+  background-color: #c0c0c0;
+}
+.userProfileLikes {
+  margin: 2em 0 -3em 3em;
+  padding: .5em;
+}
+.profilePageContent {
+  display: flex;
+  margin-top: 10em;
+}
+.profilePagePosts {
+  position: relative;
+}
+.profilePagePosts .post {
+  width: auto;
+  margin: 3em 2em 3em 3em;
+}
+.profilePageUser {
+  text-align: center;
+  width: 80%;
+  min-width: 14em;
+  max-width: 18em;
+  padding-left: 2em;
+  margin-top: 1.5em;
+}
+.profilePageImg {
+  width: 12em;
+  height: 12em;
+  object-fit: cover;
+  /* margin-top: 5em; */
+  border-radius: 50%;
+  margin: 1em;
+}
+.profilePageImgContainer {
+  background-color: #ff7043;
+  border-radius: 50%;
+  position: relative;
+  top: 13em;
+  width: 14em;
+  height: 14em;
+  margin: auto;
+}
+.profilePageUsername {
+  position: relative;
+  top: 5.5em;
+  margin: auto;
+  padding: .3em;
+  background-color: #ff7043;
+  text-align: center;
+  width: 11.4em;
+}
+.coverImageSlider {
+  height: 50%;
+  right: 2em;
+  top: 5em;
+  position: absolute;
+}
+.adjustCoverImageButton {
+  position: absolute;
+  top: 11em;
+  width: 13em;
+  right: 0em;
+}
+.saveCoverImageAdjustments {
+  position: absolute;
+  top: 11em;
+  right: 7em;
+}
+.cancelCoverImageAdjustments {
+  position: absolute;
+  top: 11em;
+  right: 0em;
+}
+.followButton {
+  position: absolute;
+  bottom: 2em;
+  right: 3em;
+  padding: .5em;
+}
+.followerLink {
+  display: flex;
+  align-items: center;
+}
+.followerLink:hover {
+  background-color: #fbb098;
+  cursor: pointer;
+  padding-left: 0.2em;
+}
+.followerLink img {
+  width: 3em;
+  height: 3em;
+  object-fit: cover;
+  border-radius: 5%;
+}
+.followerLink h3 {
+  margin: 1em;
+}
+.scrollFollowers {
+  margin-bottom: 3em;
+}
+.scrollFollowers, .scrollFollowing {
+  overflow-y: scroll;
+  max-height: 13em;
+  min-height: 6em;
+  padding: .2em 0 .2em .5em;
+}
+.followContainer {
+  background-color: #fffaf9;
+  box-shadow: 0px 2px 2px 2px #ead6cf;
+}
+.followContainer h2 {
+  margin: 0;
+  padding: .5em;
+  color: black;
+  background-color: #ffd2c4;
+}
+.searchedSongContainer::-webkit-scrollbar, 
+.userSearchResults::-webkit-scrollbar, 
+.scrollFollowers::-webkit-scrollbar, 
+.scrollFollowing::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.searchedSongContainer::-webkit-scrollbar:vertical, 
+.userSearchResults::-webkit-scrollbar:vertical, 
+.scrollFollowers::-webkit-scrollbar:vertical, 
+.scrollFollowing::-webkit-scrollbar:vertical {
+  width: 11px;
+}
+.scrollFollowers::-webkit-scrollbar-thumb,
+.scrollFollowing::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid #fffaf9;
+  background-color: rgba(0, 0, 0, .5);
+}
+.userSearchResults::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid #ff9c7d;
+  background-color: rgba(0, 0, 0, .5);
+}
+.searchedSongContainer::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid #ffffff;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+@media only screen and (min-width: 1200px) {
+  .desktopNav {
+    margin-right: 3em;
+  }
+  .username, .songName {
+    font-size: 1.6em;
+  }
+  .postText, .artists {
+    font-size: 1.3em;
+  }
+  .profilePageHeader {
+    height: 25em;
+  }
+  .profilePageContent {
+    margin-top: 15em;
+  }
+  .profilePageImgContainer {
+    top: 18em;
+  }
+  .profilePageUsername {
+    top: 9em;
+  }
+  .coverImageSlider {
+    right: 3em;
+    top: 7em;
+  }
+  .adjustCoverImageButton {
+    top: 14em;
+  }
+  .saveCoverImageAdjustments {
+    top: 14em;
+    right: 7em;
+  }
+  .cancelCoverImageAdjustments {
+    top: 14em;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .mobile {
+    display: block;
+    margin-left: auto;
+    margin-right: 2em;
+  }
+  .hideMobileNav {
+    transform: translateX(100%) scaleX(0);
+    transition: ease-out .5s transform;
+  }
+  .showMobileNav {
+    transform: translateX(0);
+    transition: ease-out .5s transform;
+  }
+  .mobileNav {
+    display: block;
+    position: absolute;
+    left: auto;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    width: 10em;
+    height: 100vh;
+    text-align: center;
+    background: #ff7043;
+  }
+  .mobileNav h4 {
+    padding: 2em 0;
+    margin: 0;
+  }
+  .mobileNav h4:hover {
+    background-color: #fbb098;
+  }
+  .newPostButton {
+    color: #ffffff;
+    background-color: #0006bf;
+  }
+  .closeMenu {
+    color: #fff5f4;
+  }
+  .desktopNav {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .postInner {
+    display: block;
+  }
+  .postInfo {
+    width: 100%;
+  }
+  .albumImg {
+    width: 40%;
+  }
+  .postMusic {
+    margin-left: 0;
+    margin-top: 1em;
+    width: 60%;
+  }
+  .likeButtonContainer {
+    justify-content: flex-end;
+  }
+  .postMusic {
+    width: 100%;
+  }
+  .profilePageUser {
+    padding: 0;
+    margin: 1em auto;
+  }
+  .profilePageContent {
+    display: block;
+    margin-top: 12em;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .profilePageHeader {
+    height: 14em;
+  }
+  .mobile {
+    margin-right: 1em;
+  }
+  .profilePageImgContainer {
+    top: 7em;
+  }
+  .profilePageUsername {
+    top: 1.5em;
+  }
+  .coverImageSlider {
+    right: 2em;
+    top: 5em;
+    height: 40%;
+  }
+  .adjustCoverImageButton {
+    top: 0;
+    right: -1em;
+  }
+  .saveCoverImageAdjustments {
+    top: 6.3em;
+    right: -1em;
+}
+  .cancelCoverImageAdjustments {
+    top: 9.3em;
+    right: -1em;
+  }
+  .profilePageContent {
+    margin-top: 6em;
+  }
+  .followButton {
+    right: 1em;
+    bottom: 7em;
+  }
+  .profilePagePosts .post {
+    margin: 3em 2em;
+  }
+  .newPost {
+    width: 100%;
+  }
+  .newPostBottom button {
+    margin: 0px 0.5em;
+    min-width: 10em;
+  }
+}
