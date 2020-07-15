@@ -7,6 +7,25 @@
 .mobileNav {
   display: none;
 }
+.blurScreen {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: -1000;
+  background-color: #9e9e9e99;
+}
+.hideBlurScreen {
+  z-index: -1000;
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+.showBlurScreen {
+  z-index: 10 !important;
+  opacity: 1;
+  transition: opacity .2s ease-out;
+}
 .logIn {
   margin-left: auto;
   margin-right: 3em;
@@ -15,6 +34,7 @@
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 2;
   width: 100%;
   background-color: #ff7043;
   align-items: center;
@@ -82,7 +102,9 @@
   opacity: 65%;
 }
 .posts {
+  position: relative;
   margin-top: 10em;
+  z-index: 1;
 }
 .post {
   width: 80%;
@@ -146,7 +168,7 @@
   border-width: 1px;
   background-color: #ffffff;
   position: absolute;
-  z-index: 10;
+  z-index: 15;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -545,11 +567,11 @@
   }
   .mobileNav {
     display: block;
-    position: absolute;
+    position: fixed;
     left: auto;
     right: 0;
     top: 0;
-    z-index: 1;
+    z-index: 15;
     width: 10em;
     height: 100vh;
     text-align: center;
@@ -574,7 +596,7 @@
   }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 600px) {
   .postInner {
     display: block;
   }
@@ -599,6 +621,25 @@
   .profilePageContent {
     display: block;
     margin-top: 12em;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .profilePagePosts .postInner {
+    display: block;
+  }
+  .profilePagePosts .postInfo {
+    width: 100%;
+  }
+  .profilePagePosts .albumImg {
+    width: 35%;
+  }
+  .profilePagePosts .postMusic {
+    margin-left: 0;
+    margin-top: 1em;
+    width: 60%;
+  }
+  .profilePagePosts .postMusic {
+    width: 100%;
   }
 }
 

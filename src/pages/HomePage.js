@@ -193,7 +193,7 @@ class HomePage extends Component {
         />
         {this.state.newPost &&
           <div>
-            <div className="outerNewPost" onMouseDown={this.clickOuterNewPost}></div>
+            <div className="outerNewPost" onMouseDown={this.clickOuterNewPost}/>
             <NewPost
               deviceId={this.state.deviceId}
               accessToken={this.state.accessToken}
@@ -211,32 +211,32 @@ class HomePage extends Component {
             {allPosts.length === 0 ? "Waiting for backend to wake up. Refresh the page after 30 seconds if nothing loads" :
               "Log in with Spotify your account to share posts and listen to peoples vibes!"}</h3>
         }
+        <div className={'blurScreen ' + (this.state.newPost ? 'showBlurScreen' : 'hideBlurScreen')}
+          onClick={this.clickOuterNewPost} />
         {
           this.state.accessToken
             ?
-            <div className={this.state.newPost ? "blurPosts" : ""}>
-              <div className="posts">
-                {allPosts.map(currentPost =>
-                  <Post
-                    post={currentPost}
-                    deviceId={this.state.deviceId}
-                    accessToken={this.state.accessToken}
-                    muted={this.state.muted}
-                    username={name}
-                    product={this.state.serverData.user.product}
-                  />)}
-              </div>
+            <div className="posts">
+              {allPosts.map(currentPost =>
+                <Post
+                  post={currentPost}
+                  deviceId={this.state.deviceId}
+                  accessToken={this.state.accessToken}
+                  muted={this.state.muted}
+                  username={name}
+                  product={this.state.serverData.user.product}
+                />)}
             </div>
             :
-              <div className={"notSignedIn posts" + (this.state.newPost ? " blurPosts" : "")}>
-                {allPosts.map(currentPost =>
-                  <Post
-                    post={currentPost}
-                    deviceId={null}
-                    accessToken={null}
-                    muted={this.state.muted}
-                  />)}
-              </div>
+            <div className={"notSignedIn posts" + (this.state.newPost ? " blurPosts" : "")}>
+              {allPosts.map(currentPost =>
+                <Post
+                  post={currentPost}
+                  deviceId={null}
+                  accessToken={null}
+                  muted={this.state.muted}
+                />)}
+            </div>
         }
       </div>
     );
