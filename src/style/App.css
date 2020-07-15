@@ -72,6 +72,7 @@
 }
 .App {
   padding: 1em;
+  min-height: 100vh;
 }
 .usernameTitle {
   margin: 0 0 16px 32px;
@@ -226,9 +227,8 @@
   background-color: #f9f9f9;
 }
 .myButtonOrange:hover, .myButtonWhite:hover {
-  background-color: #4c4c4c;
-  color: white;
-  transition: color .3s ease, background-color .3s ease;
+  background-color: #bebebe;
+  transition: background-color .3s ease;
 }
 .likedButton {
   background-color: #dedede;

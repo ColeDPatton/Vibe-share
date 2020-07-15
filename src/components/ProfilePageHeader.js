@@ -102,7 +102,7 @@ class ProfilePageHeader extends Component {
                                 onClick={this.props.clickNewPost}>{this.props.newPost ? "Cancel" : "New Post"}</button>}
                         <button className='myButtonWhite' onClick={this.redirectToProfilePage}>Your Profile</button>
                         <button className='myButtonWhite' onClick={this.props.handleMuteButton}>
-                            {this.props.muted ? 'Click to Unmute' : 'Click to Mute'}</button>
+                            {this.props.muted ? 'Unmute' : 'Mute'}</button>
                         <button className='myButtonWhite' onClick={this.handleLogInButton}>Log Out</button>
                     </div>
                 }
@@ -114,7 +114,7 @@ class ProfilePageHeader extends Component {
                                 {this.props.newPost ? "Cancel" : "New Post"}</h4>}
                         <h4 onClick={this.redirectToProfilePage}>Your Profile</h4>
                         <h4 onClick={this.props.handleMuteButton}>
-                            {this.props.muted ? 'Click to Unmute' : 'Click to Mute'}</h4>
+                            {this.props.muted ? 'Unmute' : 'Mute'}</h4>
                         <h4 onClick={this.handleLogInButton}>Log Out</h4>
                     </div>
                 }

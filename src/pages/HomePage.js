@@ -208,9 +208,9 @@ class HomePage extends Component {
         {
           (!this.state.accessToken) &&
           <h3 style={{ 'margin': '9em 0px -7em 10%', 'padding': '.5em' }}>
-            Log in with Spotify your account to share posts and listen to peoples vibes!</h3>
+            {allPosts.length === 0 ? "Waiting for backend to wake up. Refresh the page after 30 seconds if nothing loads" :
+              "Log in with Spotify your account to share posts and listen to peoples vibes!"}</h3>
         }
-
         {
           this.state.accessToken
             ?
@@ -228,15 +228,15 @@ class HomePage extends Component {
               </div>
             </div>
             :
-            <div className={"notSignedIn posts" + (this.state.newPost ? " blurPosts" : "")}>
-              {allPosts.map(currentPost =>
-                <Post
-                  post={currentPost}
-                  deviceId={null}
-                  accessToken={null}
-                  muted={this.state.muted}
-                />)}
-            </div>
+              <div className={"notSignedIn posts" + (this.state.newPost ? " blurPosts" : "")}>
+                {allPosts.map(currentPost =>
+                  <Post
+                    post={currentPost}
+                    deviceId={null}
+                    accessToken={null}
+                    muted={this.state.muted}
+                  />)}
+              </div>
         }
       </div>
     );
