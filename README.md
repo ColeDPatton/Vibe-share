@@ -1,7 +1,7 @@
 <h1> Vibe Share </h1>
 <a href="https://vibe-share.herokuapp.com/">See it live!</a>
 
-<img src="https://raw.github.com/ColeDPatton/Vibe-share/public/readmeImages/homepageImage.jpg" />
+<img src="https://raw.github.com/ColeDPatton/Vibe-share/master/public/readmeImages/homepageImage.jpg" />
 
 This is a social media site the utilizes Spotify's API to let users add a clip from any song to their posts. You can follow your friends, like their posts, and create your own posts for everyone to see. No need for a new username/password, just sign in with your existing Spotify account!
 
