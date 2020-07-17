@@ -1,6 +1,11 @@
 #root {
   background-color: #f5e7e3;
 }
+.logo {
+  margin: 1em 0 0 1.7em;
+  height: 3em;
+  cursor: pointer;
+}
 .mobile {
   display: none;
 }
@@ -39,10 +44,6 @@
   background-color: #ff7043;
   align-items: center;
 }
-.header h1 {
-  margin: .5em 0 0 1em;
-  cursor: pointer;
-}
 .profilePageHeader {
   display: flex;
   position: absolute;
@@ -70,10 +71,10 @@
   margin-left: 2em;
 }
 .searchContainer {
-  padding: 0 2em 1em;
+  margin: 7em 1em 0;
 }
 .searchContainer .filter input {
-  background-color: #ff7043;
+  background-color: #f5e7e3;
   border-color: black;
   border-style: solid;
   border-radius: 10px;
@@ -81,13 +82,14 @@
 }
 .searchContainer .filter input:focus {
   outline: none;
-  background-color: #ff916f;
+  background-color: #fffaf9;
+
 }
 .userSearchResults {
   margin-top: .5em;
   max-height: 10em;
   overflow-y: scroll;
-  background-color: #ff916f;
+  background-color: #fffaf9;
   padding-left: .5em;
 }
 .App {
@@ -103,7 +105,7 @@
 }
 .posts {
   position: relative;
-  margin-top: 10em;
+  margin-top: 3em;
   z-index: 1;
 }
 .post {
@@ -126,8 +128,8 @@
 }
 
 .albumImg {
-  width: 70%;
-  max-width: 10em;
+  width: 60%;
+  max-width: 8em;
   cursor: pointer;
   object-fit: contain;
   border-radius: 6px;
@@ -457,7 +459,7 @@
   align-items: center;
 }
 .followerLink:hover {
-  background-color: #fbb098;
+  background-color: #efcdc3;
   cursor: pointer;
   padding-left: 0.2em;
 }
@@ -510,7 +512,7 @@
 }
 .userSearchResults::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  border: 2px solid #ff9c7d;
+  border: 2px solid #fffaf9;
   background-color: rgba(0, 0, 0, .5);
 }
 .searchedSongContainer::-webkit-scrollbar-thumb {

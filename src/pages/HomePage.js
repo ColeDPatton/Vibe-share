@@ -5,7 +5,9 @@ import queryString from 'query-string';
 import Post from '../components/Post';
 import NewPost from '../components/NewPost';
 import Header from '../components/Header';
-import { loadPosts, submitPost, loadLikes, loadUserFollowing, newUser } from '../backendCalls';
+import { Filter } from '../components/NewPost'
+import { FollowerLink } from '../pages/UserProfile'
+import { loadPosts, submitPost, loadLikes, loadUserFollowing, newUser, loadAllUsers } from '../backendCalls';
 import { getLoggedInUser } from '../spotifyCalls';
 
 class HomePage extends Component {
@@ -17,11 +19,14 @@ class HomePage extends Component {
       accessToken: '',
       newPost: false,
       muted: true,
+      searching: false,
+      searchResults: []
     };
     this.clickNewPost = this.clickNewPost.bind(this);
     this.clickOuterNewPost = this.clickOuterNewPost.bind(this);
     this.submitNewPost = this.submitNewPost.bind(this);
     this.handleMuteButton = this.handleMuteButton.bind(this);
+    this.updateSearchResults = this.updateSearchResults.bind(this);
   }
 
   handlePlayerStatus = async (device_id) => {
@@ -176,10 +181,25 @@ class HomePage extends Component {
       newPost: !showPost
     });
   }
+  async updateSearchResults(filterString) {
+    let allUsers = await loadAllUsers();
+    const filteredUsers = allUsers.filter(x => {
+      if (x.username)
+        return x.username.toLowerCase().includes(filterString.toLowerCase());
+      return false;
+    });
+    this.setState({ searching: false, searchResults: filteredUsers });
+  }
+
   render() {
     let allPosts = this.state.serverData.posts ? this.state.serverData.posts : [];
     let name = this.state.serverData.user ? this.state.serverData.user.name : 'Not logged in';
     let userId = this.state.serverData.user ? this.state.serverData.user.id : '';
+    if (this.state.filterString === "" && this.state.searching) {
+      this.setState({ searching: false, searchResults: [] });
+    } else if (this.state.searching) {
+      this.updateSearchResults(this.state.filterString);
+    }
 
     return (
       <div className="App">
@@ -193,7 +213,7 @@ class HomePage extends Component {
         />
         {this.state.newPost &&
           <div>
-            <div className="outerNewPost" onMouseDown={this.clickOuterNewPost}/>
+            <div className="outerNewPost" onMouseDown={this.clickOuterNewPost} />
             <NewPost
               deviceId={this.state.deviceId}
               accessToken={this.state.accessToken}
@@ -205,9 +225,27 @@ class HomePage extends Component {
             />
           </div>
         }
+        <div className="searchContainer">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <h4 style={{ margin: '0 1em 0 0' }}>Search: </h4>
+            <Filter onTextChange={text => {
+              this.setState({ searching: true, filterString: text });
+            }} />
+          </div>
+          {this.state.searchResults.length > 0 &&
+            <div className={'userSearchResults'}>
+              {this.state.searchResults.map(searchedUser =>
+                <FollowerLink follow={searchedUser} />
+              )}
+              {this.state.searchResults.map(searchedUser =>
+                <FollowerLink follow={searchedUser} />
+              )}
+            </div>
+          }
+        </div>
         {
           (!this.state.accessToken) &&
-          <h3 style={{ 'margin': '9em 0px -7em 10%', 'padding': '.5em' }}>
+          <h3 style={{ 'margin': '1em 0 0 16px' }}>
             {allPosts.length === 0 ? "Waiting for backend to wake up. Refresh the page after 30 seconds if nothing loads" :
               "Log in with your Spotify account to share posts and listen to peoples vibes!"}</h3>
         }

@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import '../style/App.css';
 import queryString from 'query-string';
-import { Filter } from '../components/NewPost'
-import { FollowerLink } from '../pages/UserProfile'
-import { loadAllUsers } from '../backendCalls'
+import logo from '../img/VibeShareLogo.svg';
 
 class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showMobileMenu: false,
-            searching: false,
-            searchResults: []
         };
         this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.handleLogInButton = this.handleLogInButton.bind(this);
         this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
         this.redirectToProfilePage = this.redirectToProfilePage.bind(this);
-        this.updateSearchResults = this.updateSearchResults.bind(this);
         this.clickOuterMobileNav = this.clickOuterMobileNav.bind(this);
         this.clickNewPostFromMobileNav = this.clickNewPostFromMobileNav.bind(this);
     }
@@ -62,22 +57,8 @@ class Header extends Component {
             '&userId=' + this.props.userId +
             (accessToken ? ('&access_token=' + accessToken) : '');
     }
-    async updateSearchResults(filterString) {
-        let allUsers = await loadAllUsers();
-        const filteredUsers = allUsers.filter(x => {
-            if (x.username)
-                return x.username.toLowerCase().includes(filterString.toLowerCase());
-            return false;
-        });
-        this.setState({ searching: false, searchResults: filteredUsers });
-    }
-    render() {
-        if (this.state.filterString === "" && this.state.searching) {
-            this.setState({ searching: false, searchResults: [] });
-        } else if (this.state.searching) {
-            this.updateSearchResults(this.state.filterString);
-        }
 
+    render() {
         return (
             <div>
                 <div className={'blurScreen ' + (this.state.showMobileMenu ? 'showBlurScreen' : 'hideBlurScreen')}
@@ -85,7 +66,7 @@ class Header extends Component {
                 <div className='header'>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div>
-                            <h1 onClick={this.redirectToHomePage}>Vibe Share</h1>
+                            <img className="logo" src={logo} onClick={this.redirectToHomePage}></img>
                             <h3 className='usernameTitle'>{this.props.username}</h3>
                         </div>
                         {this.props.username === 'Not logged in' ?
@@ -100,24 +81,6 @@ class Header extends Component {
                                 <button className='myButtonWhite' onClick={this.props.handleMuteButton}>
                                     {this.props.muted ? 'Unmute' : 'Mute'}</button>
                                 <button className='myButtonWhite' onClick={this.handleLogInButton}>Log Out</button>
-                            </div>
-                        }
-                    </div>
-                    <div className="searchContainer">
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <h4 style={{ margin: '0 1em 0 0' }}>Search: </h4>
-                            <Filter onTextChange={text => {
-                                this.setState({ searching: true, filterString: text });
-                            }} />
-                        </div>
-                        {this.state.searchResults.length > 0 &&
-                            <div className={'userSearchResults'}>
-                                {this.state.searchResults.map(searchedUser =>
-                                    <FollowerLink follow={searchedUser} />
-                                )}
-                                {this.state.searchResults.map(searchedUser =>
-                                    <FollowerLink follow={searchedUser} />
-                                )}
                             </div>
                         }
                     </div>
