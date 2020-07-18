@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { saveProfilePicY } from '../backendCalls';
+import logo from '../img/VibeShareLogo.svg';
 
 class ProfilePageHeader extends Component {
     constructor(props) {
@@ -87,7 +88,7 @@ class ProfilePageHeader extends Component {
                         this.state.currentProfilePicY : this.state.startingProfilePicY))
                 }}>
                 <div style={{ color: 'white'}}>
-                    <h1 onClick={this.redirectToHomePage}>Vibe Share</h1>
+                    <img className="logo" src={logo} onClick={this.redirectToHomePage}></img>
                     <h3 className='usernameTitle'>{this.props.username}</h3>
                 </div>
                 {this.props.username === 'Not logged in' ?
