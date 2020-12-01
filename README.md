@@ -14,4 +14,4 @@ Both the frontend and backend are being hosted on Heroku. Because, of this, the 
 
 <h3> Why did I make this project? </h3> 
   
-I created this project for two main reasons: First, I wanted to get more practice with React. I have experience with small react projects, and I have some experience working with a large, professional React codebase, but I had yet to create my a large react project on my own. The second reason was that I wanted to show the use of a third party API. Spotify has a really cool API, and it let me bring my idea of a social media that incorporates music to life.
+I created this project for two main reasons: First, I wanted to get more practice with React. I have experience with small react projects, and I have some experience working with a large, professional React codebase, but I had yet to create a large react project on my own. The second reason was that I wanted to show the use of a third party API. Spotify has a really cool API, and it let me bring my idea of a social media that incorporates music to life.
