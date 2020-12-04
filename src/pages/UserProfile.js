@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import '../style/App.css';
-import { loadPosts, loadLikes, loadUserFollowing, followUser, unFollowUser, newUser, submitPost } from '../backendCalls'
-import { getLoggedInUser, getUser } from '../spotifyCalls';
+import { loadPosts, loadLikes, loadUser, followUser, unFollowUser, newUser, submitPost } from '../backendCalls'
+import { getLoggedInSpotifyUser, getSpotifyUser } from '../spotifyCalls';
 import Post from '../components/Post';
 import profilePicturePlaceholder from '../img/profilePicturePlaceholder.jpg';
 import ProfilePageHeader from '../components/ProfilePageHeader';
@@ -75,7 +75,7 @@ class UserProfile extends Component {
         let postsForProfile = [];
         if (parsed.access_token) {
             let accessToken = parsed.access_token;
-            getUser(accessToken, profilePageIDFromUrl).then(user => {
+            getSpotifyUser(accessToken, profilePageIDFromUrl).then(user => {
                 let imgUrl = user.images && user.images.length > 0 ?
                     user.images[0].url : '';
                 this.setState({
@@ -83,16 +83,16 @@ class UserProfile extends Component {
                 });
             });
 
-            getLoggedInUser(accessToken).then(user => {
+            getLoggedInSpotifyUser(accessToken).then(user => {
                 let postProfilePic = user.images && user.images.length > 0 ?
                 user.images[0].url : '';
 
-                loadUserFollowing(user.display_name).then(userFollowing => {
-                    if (!Object.keys(userFollowing).length) {
+                loadUser(user.id).then(loggedInUser => {
+                    if (!Object.keys(loggedInUser).length) {
                         newUser(user.id, user.display_name);
                     }
                 });
-                loadUserFollowing(profilePageIDFromUrl).then(profilePageUser => {
+                loadUser(profilePageIDFromUrl).then(profilePageUser => {
                     let loggedInUserFollowingProfileUser = profilePageUser.followers &&
                         profilePageUser.followers.filter(f =>
                             f.username === user.display_name && f.userId === user.id).length > 0;
@@ -156,7 +156,7 @@ class UserProfile extends Component {
                 });
             });
         } else {
-            loadUserFollowing(profilePageIDFromUrl).then(user => {
+            loadUser(profilePageIDFromUrl).then(user => {
                 this.setState({
                     followers: user.followers,
                     following: user.following,
@@ -285,6 +285,7 @@ class UserProfile extends Component {
         let followers = this.state.followers ? this.state.followers : [];
         let following = this.state.following ? this.state.following : [];
         let name = this.state.serverData.user ? this.state.serverData.user.name : 'Not logged in';
+        // let name = this.state.serverData.user ? ( this.state.serverData.user.name + " " + this.state.imgUrl ): this.state.imgUrl;
         let userId = this.state.serverData.user ? this.state.serverData.user.id : '';
         return (
             <div className='App'>
@@ -375,7 +376,7 @@ export class FollowerLink extends Component {
             let accessToken = ''
             if (parsed.access_token) {
                 accessToken = parsed.access_token;
-                getUser(accessToken, this.props.follow.userId).then(user => {
+                getSpotifyUser(accessToken, this.props.follow.userId).then(user => {
                     let imgUrl = user.images ?
                         user.images[0].url : '';
                     this.setState({
@@ -390,7 +391,7 @@ export class FollowerLink extends Component {
         let accessToken = ''
         if (parsed.access_token) {
             accessToken = parsed.access_token;
-            getUser(accessToken, this.props.follow.userId).then(user => {
+            getSpotifyUser(accessToken, this.props.follow.userId).then(user => {
                 let imgUrl = user.images ?
                     user.images[0].url : '';
                 this.setState({

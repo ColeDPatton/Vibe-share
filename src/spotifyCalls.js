@@ -1,12 +1,12 @@
 import $ from 'jquery';
 
-export async function getLoggedInUser(token) {
+export async function getLoggedInSpotifyUser(token) {
   return fetch('https://api.spotify.com/v1/me', {
     headers: {'Authorization': 'Bearer ' + token}
   }).then(response => response.json());
 }
 
-export async function getUser(token, userId) {
+export async function getSpotifyUser(token, userId) {
   return fetch('https://api.spotify.com/v1/users/' + userId, {
     headers: {'Authorization': 'Bearer ' + token}
   }).then(response => response.json());

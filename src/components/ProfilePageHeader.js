@@ -89,7 +89,7 @@ class ProfilePageHeader extends Component {
                 }}>
                 <div style={{ color: 'white'}}>
                     <img className="logo" src={logo} onClick={this.redirectToHomePage}></img>
-                    <h3 className='usernameTitle'>{this.props.username}</h3>
+                    <h3 className='usernameTitle'>{this.props.profilePic}</h3>
                 </div>
                 {this.props.username === 'Not logged in' ?
                     <button className='logIn myButtonWhite Log-In-Button' style={{ marginTop: '2em' }}

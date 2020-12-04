@@ -7,8 +7,8 @@ import NewPost from '../components/NewPost';
 import Header from '../components/Header';
 import { Filter } from '../components/NewPost'
 import { FollowerLink } from '../pages/UserProfile'
-import { loadPosts, submitPost, loadLikes, loadUserFollowing, newUser, loadAllUsers } from '../backendCalls';
-import { getLoggedInUser } from '../spotifyCalls';
+import { loadPosts, submitPost, loadLikes, loadUser, newUser, loadAllUsers, updatePostsPictures } from '../backendCalls';
+import { getLoggedInSpotifyUser, getSpotifyUser } from '../spotifyCalls';
 
 class HomePage extends Component {
   constructor() {
@@ -72,12 +72,12 @@ class HomePage extends Component {
     if (parsed.access_token) {
       let accessToken = parsed.access_token;
 
-      getLoggedInUser(accessToken).then(user => {
+      getLoggedInSpotifyUser(accessToken).then(user => {
         let imgUrl = user.images && user.images.length > 0 ?
           user.images[0].url : '';
 
-        loadUserFollowing(user.display_name).then(userFollowing => {
-          if (!Object.keys(userFollowing).length) {
+        loadUser(user.id).then(loggedInUser => {
+          if (!Object.keys(loggedInUser).length) {
             newUser(user.id, user.display_name);
           }
         });
@@ -85,6 +85,17 @@ class HomePage extends Component {
           let postsWithLikeCount = [];
           loadLikes().then(likes => {
             posts.forEach(post => {
+              getSpotifyUser(accessToken, post.userId).then(spotifyUser => {
+                let imgUrl = spotifyUser.images && spotifyUser.images.length > 0 ?
+                  spotifyUser.images[0].url : '';
+                if (post.profilePic !== imgUrl) {
+                  updatePostsPictures(spotifyUser.id, imgUrl);
+                  post = {
+                    ...post,
+                    profilePic: imgUrl,
+                  }
+                }
+              });
               let likeCount = 0;
               likes.forEach(like => {
                 if (post._id === like.postId) {
@@ -117,7 +128,7 @@ class HomePage extends Component {
         let postsWithLikeCount = [];
         loadLikes().then(likes => {
           posts.forEach(post => {
-            let likeCount = 0
+            let likeCount = 0;
             likes.forEach(like => {
               if (post._id === like.postId) {
                 likeCount++;
@@ -128,14 +139,14 @@ class HomePage extends Component {
               likeCount: likeCount
             }
             postsWithLikeCount.push(post);
-          })
+          });
           this.setState({
             serverData: {
               posts: postsWithLikeCount,
             }
-          })
-        })
-      })
+          });
+        });
+      });
     }
   }
 

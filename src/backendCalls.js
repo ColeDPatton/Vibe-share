@@ -30,6 +30,18 @@ export async function submitPost(profilePic, username, userId, text, songId, son
     }).then(d => d.json());
 }
 
+export async function updatePostsPictures(userId, profilePic) {
+    var updatedData = new URLSearchParams();
+    updatedData.append('userId', userId);
+    updatedData.append('profilePic', profilePic);
+
+    return fetch(url + '/api/updatePost', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: updatedData
+    }).then(d => d.json());
+}
+
 export async function loadLikes() {
     return fetch(url + '/api/likes', {
         headers: {
@@ -71,8 +83,8 @@ export async function loadAllUsers() {
     }).then(d => d.json());
 }
 
-export async function loadUserFollowing(username) {
-    return fetch(url + '/api/user/?userId=' + username, {
+export async function loadUser(userId) {
+    return fetch(url + '/api/user/?userId=' + userId, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
