@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import '../style/App.css';
-import { loadPosts, loadLikes, loadUser, followUser, unFollowUser, newUser, submitPost } from '../backendCalls'
+import { loadPosts, loadLikes, loadUser, followUser, unFollowUser, newUser, submitPost, updateUserProfilePicture } from '../backendCalls'
 import { getLoggedInSpotifyUser, getSpotifyUser } from '../spotifyCalls';
 import Post from '../components/Post';
 import profilePicturePlaceholder from '../img/profilePicturePlaceholder.jpg';
@@ -31,6 +31,7 @@ class UserProfile extends Component {
         this.clickNewPost = this.clickNewPost.bind(this);
         this.clickOuterNewPost = this.clickOuterNewPost.bind(this);
         this.submitNewPost = this.submitNewPost.bind(this);
+        this.useProfilePicturePlaceholder = this.useProfilePicturePlaceholder.bind(this);
     }
     handlePlayerStatus = async (device_id) => {
         this.setState({
@@ -85,7 +86,7 @@ class UserProfile extends Component {
 
             getLoggedInSpotifyUser(accessToken).then(user => {
                 let postProfilePic = user.images && user.images.length > 0 ?
-                user.images[0].url : '';
+                    user.images[0].url : '';
 
                 loadUser(user.id).then(loggedInUser => {
                     if (!Object.keys(loggedInUser).length) {
@@ -93,6 +94,9 @@ class UserProfile extends Component {
                     }
                 });
                 loadUser(profilePageIDFromUrl).then(profilePageUser => {
+                    if (this.state.imgUrl !== profilePageUser.profilePic) {
+                        updateUserProfilePicture(profilePageIDFromUrl, this.state.imgUrl);
+                    }
                     let loggedInUserFollowingProfileUser = profilePageUser.followers &&
                         profilePageUser.followers.filter(f =>
                             f.username === user.display_name && f.userId === user.id).length > 0;
@@ -160,9 +164,10 @@ class UserProfile extends Component {
                 this.setState({
                     followers: user.followers,
                     following: user.following,
-                    profilePicY: user.profilePicY
-                })
-            })
+                    profilePicY: user.profilePicY,
+                    imgUrl: user.profilePic
+                });
+            });
 
             loadPosts().then(posts => {
                 loadLikes().then(likes => {
@@ -252,33 +257,36 @@ class UserProfile extends Component {
             newPost: !showPost
         });
     }
+    useProfilePicturePlaceholder(ev) {
+        ev.target.src = profilePicturePlaceholder;
+    }
 
-  async submitNewPost(text, songId, songName, songArtist, songArt, startTime, stopTime) {
-    const profilePic = this.state.serverData.user.profilePic;
-    const username = this.state.serverData.user.name;
-    const userId = this.state.serverData.user.id;
-    const newPost = await submitPost(
-      profilePic,
-      username,
-      userId,
-      text,
-      songId,
-      songName,
-      songArtist,
-      songArt,
-      startTime,
-      stopTime
-    );
-    const updatedPosts = this.state.serverData.posts;
-    updatedPosts.unshift(newPost);
-    this.setState({
-      serverData: {
-        posts: updatedPosts,
-        user: this.state.serverData.user
-      },
-      newPost: false
-    });
-  }
+    async submitNewPost(text, songId, songName, songArtist, songArt, startTime, stopTime) {
+        const profilePic = this.state.serverData.user.profilePic;
+        const username = this.state.serverData.user.name;
+        const userId = this.state.serverData.user.id;
+        const newPost = await submitPost(
+            profilePic,
+            username,
+            userId,
+            text,
+            songId,
+            songName,
+            songArtist,
+            songArt,
+            startTime,
+            stopTime
+        );
+        const updatedPosts = this.state.serverData.posts;
+        updatedPosts.unshift(newPost);
+        this.setState({
+            serverData: {
+                posts: updatedPosts,
+                user: this.state.serverData.user
+            },
+            newPost: false
+        });
+    }
 
     render() {
         let allPosts = this.state.serverData.posts ? this.state.serverData.posts : [];
@@ -316,7 +324,8 @@ class UserProfile extends Component {
                     </div>
                 }
                 <div className='profilePageImgContainer'>
-                    <img className='profilePageImg' src={this.state.imgUrl ? this.state.imgUrl : profilePicturePlaceholder} />
+                    <img className='profilePageImg' src={this.state.imgUrl ? this.state.imgUrl : profilePicturePlaceholder} 
+                    onError = {this.useProfilePicturePlaceholder} />
                 </div>
                 <h2 className='profilePageUsername'>{this.state.profilePageUsername}</h2>
                 <div className='profilePageContent'>
@@ -381,6 +390,12 @@ export class FollowerLink extends Component {
                         user.images[0].url : '';
                     this.setState({
                         imgUrl: imgUrl,
+                    });
+                });
+            } else {
+                loadUser(this.props.follow.userId).then(user => {
+                    this.setState({
+                        imgUrl: user.profilePic
                     });
                 });
             }

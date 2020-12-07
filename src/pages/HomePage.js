@@ -7,7 +7,7 @@ import NewPost from '../components/NewPost';
 import Header from '../components/Header';
 import { Filter } from '../components/NewPost'
 import { FollowerLink } from '../pages/UserProfile'
-import { loadPosts, submitPost, loadLikes, loadUser, newUser, loadAllUsers, updatePostsPictures } from '../backendCalls';
+import { loadPosts, submitPost, loadLikes, loadUser, newUser, loadAllUsers, updatePostsPictures, updateUserProfilePicture } from '../backendCalls';
 import { getLoggedInSpotifyUser, getSpotifyUser } from '../spotifyCalls';
 
 class HomePage extends Component {
@@ -79,6 +79,9 @@ class HomePage extends Component {
         loadUser(user.id).then(loggedInUser => {
           if (!Object.keys(loggedInUser).length) {
             newUser(user.id, user.display_name);
+          }
+          if(imgUrl !== loggedInUser.profilePic) {
+            updateUserProfilePicture(user.id, imgUrl);
           }
         });
         loadPosts().then(posts => {

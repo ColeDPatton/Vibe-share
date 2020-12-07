@@ -105,6 +105,18 @@ export async function newUser(userId, username) {
     }).then(d => d.json());
 }
 
+export async function updateUserProfilePicture(userId, profilePic) {
+    var updatedData = new URLSearchParams();
+    updatedData.append('userId', userId);
+    updatedData.append('profilePic', profilePic);
+
+    return fetch(url + '/api/updateProfilePicture', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: updatedData
+    }).then(d => d.json());
+}
+
 export async function followUser(personFollowingName, personFollowingId,
     personBeingFollowedName, personBeingFollowedId) {
 
